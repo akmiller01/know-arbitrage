@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>
+                {% block title %}{% endblock %}
+            </title>
+            
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="">
+            <meta name="author" content="">
+            
+            {% load staticfiles %}
+            {% load compress %}
+            
+            <link rel="shortcut icon" type="image/png" href="{% static "blog/favicon.ico" %}"/>
+        
+            {% compress css %}
+            <!-- Bootstrap Core CSS -->
+            <link href="{% static "blog/css/bootstrap.min.css" %}" rel="stylesheet">
+        
+            <!-- Custom CSS -->
+            <link href="{% static "blog/css/clean-blog.min.css" %}" rel="stylesheet">
+            <style>
+                a{color: #2b9c40;}
+                a:hover, a:focus{color: #1e6d2c;}
+            </style>
+        
+            <!-- Custom Fonts -->
+            <link href="{% static "blog/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+            <link href="{% static "blog/css/font-lora.css" %}" rel='stylesheet' type='text/css'>
+            <link href="{% static "blog/css/font-open-sans.css" %}" rel='stylesheet' type='text/css'>
+            {% endcompress %}
+            {% compress js %}
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+                <script src="{% static "blog/js/html5shiv.js" %}"></script>
+                <script src="{% static "blog/js/respond.min.js" %}"></script>
+            <![endif]-->
+            {% endcompress %}
+
+            </head>
+        <body>
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-custom navbar-fixed-top is-fixed is-visible">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{% url 'blog.views.index' %}">hc</a>
+                    </div>
+        
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="{% url 'blog.views.index' %}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'blog.views.about' %}">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container -->
+            </nav>
+            {% block content %}
+            {% endblock %}
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                            <ul class="list-inline text-center">
+                                <li>
+                                    <a href="https://twitter.com/honestlycurated" target="_blank">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="mailto">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/akmiller01/honestly-curated" target="_blank">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <p class="copyright text-muted">Copyright &copy; Honestly Curated 2015</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        
+            <!-- jQuery -->
+            {% compress js %}
+            <script src="{% static "blog/js/jquery.js" %}"></script>
+            <script>
+                $("#mailto").click( function(e) {
+                    e.preventDefault();
+                    var a = "honestlycurated", 
+                          b = "gmail";
+                
+                    window.open("mailto:" + a + "@" + b + ".com");
+                } );
+            </script>
+        
+            <!-- Bootstrap Core JavaScript -->
+            <script src="{% static "blog/js/bootstrap.min.js" %}"></script>
+        
+            <!-- Custom Theme JavaScript -->
+            <script src="{% static "blog/js/clean-blog.min.js" %}"></script>
+            
+            <!--Google Analytics-->
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+              
+                ga('create', 'UA-64579799-1', 'auto');
+                ga('send', 'pageview');
+            </script>
+            {% endcompress %}
+
+        </body>
+    </html>

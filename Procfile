@@ -1,0 +1,1 @@
+web: cd ka && gunicorn ka.wsgi --log-file -
