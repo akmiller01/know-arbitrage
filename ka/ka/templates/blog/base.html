@@ -19,18 +19,9 @@
             {% compress css %}
             <!-- Bootstrap Core CSS -->
             <link href="{% static "blog/css/bootstrap.min.css" %}" rel="stylesheet">
-        
+            
             <!-- Custom CSS -->
-            <link href="{% static "blog/css/clean-blog.min.css" %}" rel="stylesheet">
-            <style>
-                a{color: #2b9c40;}
-                a:hover, a:focus{color: #1e6d2c;}
-            </style>
-        
-            <!-- Custom Fonts -->
-            <link href="{% static "blog/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
-            <link href="{% static "blog/css/font-lora.css" %}" rel='stylesheet' type='text/css'>
-            <link href="{% static "blog/css/font-open-sans.css" %}" rel='stylesheet' type='text/css'>
+            <link href="{% static "blog/css/blog-home.css" %}" rel="stylesheet">
             {% endcompress %}
             {% compress js %}
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,28 +34,31 @@
 
             </head>
         <body>
+        
             <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-custom navbar-fixed-top is-fixed is-visible">
-                <div class="container-fluid">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header page-scroll">
+                    <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="{% url 'blog.views.index' %}">hc</a>
+                        <a class="navbar-brand" href="#">Start Bootstrap</a>
                     </div>
-        
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav">
                             <li>
-                                <a href="{% url 'blog.views.index' %}">Home</a>
+                                <a href="#">About</a>
                             </li>
                             <li>
-                                <a href="{% url 'blog.views.about' %}">About</a>
+                                <a href="#">Services</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -72,6 +66,7 @@
                 </div>
                 <!-- /.container -->
             </nav>
+
             {% block content %}
             {% endblock %}
             <!-- Footer -->
