@@ -3,76 +3,53 @@
     {% block title %} Honestly Curated {% endblock %}
     {% load staticfiles %}
     {% block content %}
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('{{MEDIA_URL}}')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>Honestly Curated</h1>
-                        <hr class="small">
-                        <span class="subheading">Mini collections of conscientiously curated art, fashion and accessories</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                {% for post in posts %}
-                <div class="post-preview">
-                    <a href="{{post.get_absolute_url}}">
-                        <h2 class="post-title">
-                            {{post.title}}
-                        </h2>
-                        <h3 class="post-subtitle">
-                            {{post.description}}
-                        </h3>
-                    </a>
-                    {% if post.tags %}
-                    <p class="tags">
-                        <strong>Tagged as </strong>
-                        {% for tag in post.tags %}
-                            <a href="{% url 'blog.views.index' %}?page=1&tag={{tag.slug}}">{{tag.name}}</a>
-                        {% endfor %}
-                    </p>
-                    {% endif %}
-                    <p class="post-meta">Posted by {{post.author.get_full_name}} on
-                        <time datetime="{{post.created|date:"c"}}">
-                            {{post.created|date}}
-                        </time>
-                    </p>
-                </div>
-                <hr>
-                {% endfor %}
-                <!-- Pager -->
-                <ul class="pager">
-                    {% if posts.has_next %}
-                        <li class="next">
-                            {% if tagParam %}
-                            <a href="?page={{ posts.next_page_number }}&tag={{tagParam}}">Older Posts &rarr;</a>
-                            {% else %}
-                            <a href="?page={{ posts.next_page_number }}">Older Posts &rarr;</a>
-                            {% endif %}
-                        </li>
-                    {% endif %}
-                    {% if posts.has_previous %}
-                        <li class="next">
-                            {% if tagParam %}
-                            <a href="?page={{ posts.previous_page_number }}&tag={{tagParam}}">&larr; Newer Posts</a>
-                            {% else %}
-                            <a href="?page={{ posts.previous_page_number }}">&larr; Newer Posts</a>
-                            {% endif %}
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </div>
+    <!-- Header -->
+    <h1 class="page-header">
+        Know Arbitrage
+        <small>Because someone has to bring the market into equilibrium</small>
+    </h1>
+    
+    {% for post in posts %}
+    <!-- Blog Post -->
+    <h2>
+        <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+    </h2>
+    <p class="lead">
+        by {{post.author.get_full_name}}
+    </p>
+    <p><span class="glyphicon glyphicon-time"></span> Posted on
+    <time datetime="{{post.created|date:"c"}}">
+        {{post.created|date}}
+    </time>
+    </p>
+    <hr>
+    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+    <hr>
+    <p>{{post.description}}</p>
+    <a class="btn btn-primary" href="{{post.get_absolute_url}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
     <hr>
+    {% endfor %}
+
+    <!-- Pager -->
+    <ul class="pager">
+        {% if posts.has_next %}
+            <li class="next">
+                {% if tagParam %}
+                <a href="?page={{ posts.next_page_number }}&tag={{tagParam}}">Older &rarr;</a>
+                {% else %}
+                <a href="?page={{ posts.next_page_number }}">Older &rarr;</a>
+                {% endif %}
+            </li>
+        {% endif %}
+        {% if posts.has_previous %}
+            <li class="previous">
+                {% if tagParam %}
+                <a href="?page={{ posts.previous_page_number }}&tag={{tagParam}}">&larr; Newer</a>
+                {% else %}
+                <a href="?page={{ posts.previous_page_number }}">&larr; Newer</a>
+                {% endif %}
+            </li>
+        {% endif %}
+    </ul>
     {% endblock %}

@@ -23,8 +23,6 @@ def index(request):
     except EmptyPage:
         #If page is out of range, deliver last page of results
         posts = paginator.page(paginator.num_pages)
-    for post in posts:
-        post.tags = Tag.objects.filter(post__slug=post.slug)
     #now return the rendered template
     return render(request,'blog/index.html',{'posts':posts,'tagParam':tagParam,'MEDIA_URL':settings.MEDIA_URL})
 
