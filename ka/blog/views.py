@@ -1,10 +1,9 @@
+import math
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Post
 from blog.models import Tag
-from blog.models import About
-from django.conf import settings
-    
+from blog.models import About    
 
 def index(request):
     #get the blog posts that are published
@@ -23,16 +22,18 @@ def index(request):
     except EmptyPage:
         #If page is out of range, deliver last page of results
         posts = paginator.page(paginator.num_pages)
+    tags = Tag.objects.all()
+    half_tags = math.ceil(len(tags)/2.0)
     #now return the rendered template
-    return render(request,'blog/index.html',{'posts':posts,'tagParam':tagParam,'MEDIA_URL':settings.MEDIA_URL})
+    return render(request,'blog/index.html',{'posts':posts,'tags':tags,'half_tags':half_tags,'tagParam':tagParam})
 
 def about(request):
     about = About.objects.all()[:1].get()
-    return render(request,'blog/about.html',{'about':about,'MEDIA_URL':settings.MEDIA_URL})
+    return render(request,'blog/about.html',{'about':about})
 
 def post(request,slug):
     #get the Post object
     post = get_object_or_404(Post,slug=slug)
     post.tags = Tag.objects.filter(post__slug=post.slug)
     #now return the rendered template
-    return render(request,'blog/post.html',{'post':post,'MEDIA_URL':settings.MEDIA_URL})
+    return render(request,'blog/post.html',{'post':post})
