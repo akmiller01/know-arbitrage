@@ -26,7 +26,7 @@ class Post(models.Model):
     slug = models.SlugField(unique=True,
                             max_length=255)
     description = models.CharField(max_length=255, null=True, blank=True,help_text="Leave blank for auto-fill")
-    author = models.ForeignKey(User, null=True, blank=True,help_text="Leave blank for auto-fill")
+    author = models.ForeignKey(User, null=True, blank=True,editable=False)
     content = RedactorField(verbose_name=u'Text')
     published = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
