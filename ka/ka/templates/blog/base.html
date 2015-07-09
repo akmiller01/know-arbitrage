@@ -46,7 +46,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">KnowArb</a>
+                        <a class="navbar-brand" href="#">Know Arbitrage</a>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -97,7 +97,7 @@
                             {% if forloop.first %}
                             <!-- Blog Categories Well -->
                             <div class="well">
-                                <h4>Blog Categories</h4>
+                                <h4>Categories</h4>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <ul class="list-unstyled">
@@ -121,8 +121,15 @@
         
                         <!-- Side Widget Well -->
                         <div class="well">
-                            <h4>Side Widget Well</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                            <h4>Relevant Quotes</h4>
+                        <!-- Start of Yahoo! Finance code -->
+                            <iframe allowtransparency="true" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
+                                    src="http://badge.finance.yahoo.com/instrument/1.0/{% for stock in stocks %}{{stock.symbol}},{% endfor %}/badge;quote/HTML?AppID=vpPzT1b0oGUaGi7_AxID9gRdNAo_AA0-&sig=cz59BlEOYKnCI76TDO_qqV_V7Fg-&t=1436472604923"
+                                    width="100%"
+                                    style="height:calc(170px + 30px * {{ stocks|length }});">
+                                <a href="http://finance.yahoo.com">Yahoo! Finance</a>
+                            </iframe>
+                        <!-- End of Yahoo! Finance code -->
                         </div>
         
                     </div>

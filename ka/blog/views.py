@@ -1,9 +1,11 @@
 import math
+from itertools import chain
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Post
 from blog.models import Tag
-from blog.models import About    
+from blog.models import Stock
+from blog.models import About
 
 def index(request):
     #get the blog posts that are published
@@ -22,10 +24,27 @@ def index(request):
     except EmptyPage:
         #If page is out of range, deliver last page of results
         posts = paginator.page(paginator.num_pages)
+    #Tags
     tags = Tag.objects.all()
     half_tags = math.ceil(len(tags)/2.0)
+    #Relevant stocks
+    stockLen = 0
+    for post in posts:
+        if stockLen == 0:
+            stocks = Stock.objects.filter(post__slug=post.slug)
+            stockLen += len(stocks)
+        else:
+            newStocks = Stock.objects.filter(post__slug=post.slug)
+            stocks = chain(stocks,newStocks)
+            stockLen += len(newStocks)
+    if stockLen<3:
+        stocks = []
+        for _ in range(4-stockLen):
+            randStock = Stock.objects.random()
+            if randStock not in stocks:
+                stocks.append(randStock)
     #now return the rendered template
-    return render(request,'blog/index.html',{'posts':posts,'tags':tags,'half_tags':half_tags,'tagParam':tagParam})
+    return render(request,'blog/index.html',{'posts':posts,'tags':tags,'half_tags':half_tags,'tagParam':tagParam,'stocks':stocks})
 
 def about(request):
     about = About.objects.all()[:1].get()
