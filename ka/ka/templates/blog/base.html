@@ -118,19 +118,32 @@
                             </div>
                             {% endif %}
                         {% endfor %}
-        
+                        {% if posts and stockLen > 0 %}
                         <!-- Side Widget Well -->
-                        <div class="well">
+                        <div class="well" style="text-align:center;">
                             <h4>Relevant Quotes</h4>
                         <!-- Start of Yahoo! Finance code -->
                             <iframe allowtransparency="true" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
-                                    src="http://badge.finance.yahoo.com/instrument/1.0/{% for stock in stocks %}{{stock.symbol}},{% endfor %}/badge;quote/HTML?AppID=vpPzT1b0oGUaGi7_AxID9gRdNAo_AA0-&sig=cz59BlEOYKnCI76TDO_qqV_V7Fg-&t=1436472604923"
-                                    width="100%"
-                                    style="height:calc(170px + 30px * {{ stocks|length }});">
+                                    src="http://badge.finance.yahoo.com/instrument/1.0/{% for post in posts %}{% for stock in post.stocks %}{{stock.symbol}},{% endfor %}{% endfor %}/badge;quote/HTML?AppID=vpPzT1b0oGUaGi7_AxID9gRdNAo_AA0-&sig=cz59BlEOYKnCI76TDO_qqV_V7Fg-&t=1436472604923"
+                                    style="height:calc(170px + 30px * {{ stockLen }});">
                                 <a href="http://finance.yahoo.com">Yahoo! Finance</a>
                             </iframe>
                         <!-- End of Yahoo! Finance code -->
                         </div>
+                        {% endif %}
+                        {% if post and stockLen > 0%}
+                        <!-- Side Widget Well -->
+                        <div class="well"  style="text-align:center;">
+                            <h4>Relevant Quotes</h4>
+                        <!-- Start of Yahoo! Finance code -->
+                            <iframe allowtransparency="true" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
+                                    src="http://badge.finance.yahoo.com/instrument/1.0/{% for stock in post.stocks %}{{stock.symbol}},{% endfor %}/badge;quote/HTML?AppID=vpPzT1b0oGUaGi7_AxID9gRdNAo_AA0-&sig=cz59BlEOYKnCI76TDO_qqV_V7Fg-&t=1436472604923"
+                                    style="height:calc(170px + 30px * {{ stockLen }});">
+                                <a href="http://finance.yahoo.com">Yahoo! Finance</a>
+                            </iframe>
+                        <!-- End of Yahoo! Finance code -->
+                        </div>
+                        {% endif %}
         
                     </div>
         
