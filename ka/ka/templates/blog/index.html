@@ -37,6 +37,8 @@
             <li class="next">
                 {% if tagParam %}
                 <a href="?page={{ posts.next_page_number }}&tag={{tagParam}}">Older &rarr;</a>
+                {% elif queryParam %}
+                <a href="?page={{ posts.next_page_number }}&q={{queryParam}}">Older &rarr;</a>
                 {% else %}
                 <a href="?page={{ posts.next_page_number }}">Older &rarr;</a>
                 {% endif %}
@@ -46,6 +48,8 @@
             <li class="previous">
                 {% if tagParam %}
                 <a href="?page={{ posts.previous_page_number }}&tag={{tagParam}}">&larr; Newer</a>
+                {% elif queryParam %}
+                <a href="?page={{ posts.previous_page_number }}&q={{queryParam}}">&larr; Newer</a>
                 {% else %}
                 <a href="?page={{ posts.previous_page_number }}">&larr; Newer</a>
                 {% endif %}
