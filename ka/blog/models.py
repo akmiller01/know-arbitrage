@@ -3,17 +3,8 @@ from django.core.urlresolvers import reverse
 from redactor.fields import RedactorField
 from django.contrib.auth.models import User
 from django.utils.html import strip_tags
-from django.db.models.aggregates import Count
-from random import randint
-
-class StockManager(models.Manager):
-    def random(self):
-        count = self.aggregate(count=Count('id'))['count']
-        random_index = randint(0, count - 1)
-        return self.all()[random_index]
 
 class Stock(models.Model):
-    objects = StockManager()
     company = models.CharField(max_length=255, unique=True)
     symbol = models.CharField(max_length=10, unique=True)
     
