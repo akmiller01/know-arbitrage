@@ -39,10 +39,24 @@
     <!-- Comments Form -->
     <div class="well">
         <h4>Leave a Comment:</h4>
-        <form role="form">
+        <form role="form" action="{{post.get_comment_url}}" method="POST">{% csrf_token %}
             <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <label for="id_author">Name</label>
+                {{ form.author }}
             </div>
+            <div class="form-group">
+                <label for="id_body">Comment</label>
+                {{ form.body }}
+            </div>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="message {{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
@@ -52,15 +66,27 @@
     <!-- Posted Comments -->
 
     <!-- Comment -->
-    <div class="media">
-        <a class="pull-left" href="#">
-            <img class="media-object" src="http://placehold.it/64x64" alt="">
-        </a>
+    {% for comment in comments%}
+    <div class="media{% if comment.admin %} admin-comment{% endif %}">
         <div class="media-body">
-            <h4 class="media-heading">Start Bootstrap
-                <small>August 25, 2014 at 9:30 PM</small>
+            <h4 class="media-heading">
+                {% if comment.admin %}<span class="glyphicon glyphicon-star"></span>{% endif %}
+                {{comment.author}}
+                <small>
+                    <time datetime="{{comment.created|date:"c"}}">
+                        {{comment.created|date}} at {{comment.created|date:'g:i A'}}
+                    </time>
+                </small>
             </h4>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            {{comment.body}}
         </div>
     </div>
+    {% empty %}
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">No comments, yet. Why not add one yourself?
+            </h4>
+        </div>
+    </div>
+    {% endfor %}
     {% endblock %}

@@ -63,6 +63,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog.views.post',args=[self.slug])
     
+    def get_comment_url(self):
+        return reverse('blog.views.add_comment',args=[self.slug])
+    
     def save(self, *args, **kwargs):
         if self.content and (self.description is None or self.description == ""):
             suffix = "..."
@@ -70,3 +73,18 @@ class Post(models.Model):
             content = strip_tags(self.content)
             self.description = content if len(content) <= length else content[:length-len(suffix)].rsplit(' ', 1)[0] + suffix
         super(Post, self).save(*args, **kwargs)
+        
+class Comment(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=60)
+    author_ip = models.GenericIPAddressField(null=True,blank=True)
+    body = models.TextField()
+    post = models.ForeignKey(Post)
+    validated = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return unicode(self.body[:60])
+    
+    class Meta:
+        ordering = ['-created']

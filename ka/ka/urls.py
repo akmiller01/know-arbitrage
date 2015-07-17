@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     url(r'^$','blog.views.index'),
     url(r'^(?P<slug>[\w\-]+)/$', 'blog.views.post'),
     url(r'^p/(?P<slug>[\w\-]+)/$', 'blog.views.page'),
+    url(r'^add_comment/(?P<slug>[\w\-]+)/$', 'blog.views.add_comment'),
     url(r'^redactor/', include('redactor.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
