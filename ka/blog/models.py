@@ -14,8 +14,22 @@ class Stock(models.Model):
     def __str__(self):
         return self.company
 
-class About(models.Model):
+class Page(models.Model):
+    title = models.CharField(max_length=255, unique=True)
+    subtitle = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True)
+    order = models.IntegerField(unique=True)
     content = RedactorField(verbose_name=u'Text')
+    published = models.BooleanField(default=True)
+    
+    class Meta:
+        ordering = ['order']
+    
+    def get_absolute_url(self):
+        return reverse('blog.views.page',args=[self.slug])
+    
+    def __unicode__(self):
+        return u'%s' % self.title
 
 class Tag(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -38,6 +52,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     tag = models.ManyToManyField(Tag, related_name="posts", related_query_name="post", blank=True)
     stock = models.ManyToManyField(Stock,related_name="posts",related_query_name="post", blank=True)
+    imageURL = models.URLField(max_length=255, null=True, blank=True,help_text="Aim for 900x300 resolution")
     
     class Meta:
         ordering = ['-created']

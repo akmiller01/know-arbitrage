@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+    {% block title %} {{page.title}} {% endblock %}
+    {% load staticfiles %}
+    {% block content %}
+    <!-- Header -->
+    <h1 class="page-header">
+        {{page.title}} <br/>
+        <small>{{page.subtitle}}</small>
+    </h1>
+    
+    {{page.content|safe}}
+    
+    {% endblock %}

@@ -19,12 +19,14 @@
     </p>
     <p><span class="glyphicon glyphicon-time"></span> Posted on
     <time datetime="{{post.created|date:"c"}}">
-        {{post.created|date}}
+        {{post.created|date}} at {{post.created|date:'g:i A'}}
     </time>
     </p>
+    {% if post.imageURL %}
     <hr>
-    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+    <img class="img-responsive" src={{post.imageURL}} alt={{post.title}}>
     <hr>
+    {% endif %}
     <p>{{post.description}}</p>
     <a class="btn btn-primary" href="{{post.get_absolute_url}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 

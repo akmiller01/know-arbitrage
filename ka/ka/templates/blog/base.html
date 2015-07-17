@@ -31,6 +31,7 @@
             </style>
             <!-- Custom CSS -->
             <link href="{% static "blog/css/blog-home.css" %}" rel="stylesheet">
+            <link href="{% static "blog/css/blog-post.css" %}" rel="stylesheet">
             {% endcompress %}
             {% compress js %}
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -60,15 +61,11 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
+                            {% for page in pages%}
                             <li>
-                                <a href="#">About</a>
+                                <a href="{{page.get_absolute_url}}">{{page.title}}</a>
                             </li>
-                            <li>
-                                <a href="#">Services</a>
-                            </li>
-                            <li>
-                                <a href="#">Contact</a>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -106,7 +103,7 @@
                             {% if forloop.first %}
                             <!-- Blog Categories Well -->
                             <div class="well">
-                                <h4>Categories</h4>
+                                <h4>Post Categories</h4>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <ul class="list-unstyled">
@@ -133,6 +130,7 @@
                             <h4>Relevant Quotes</h4>
                         <!-- Start of Yahoo! Finance code -->
                             <iframe allowtransparency="true" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
+                                    width="100%"
                                     src="http://badge.finance.yahoo.com/instrument/1.0/{% for post in posts %}{% for stock in post.stocks %}{{stock.symbol}},{% endfor %}{% endfor %}/badge;quote/HTML?AppID=vpPzT1b0oGUaGi7_AxID9gRdNAo_AA0-&sig=cz59BlEOYKnCI76TDO_qqV_V7Fg-&t=1436472604923"
                                     style="height:calc(170px + 30px * {{ stockLen }});">
                                 <a href="http://finance.yahoo.com">Yahoo! Finance</a>
@@ -146,6 +144,7 @@
                             <h4>Relevant Quotes</h4>
                         <!-- Start of Yahoo! Finance code -->
                             <iframe allowtransparency="true" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
+                                    width="100%"
                                     src="http://badge.finance.yahoo.com/instrument/1.0/{% for stock in post.stocks %}{{stock.symbol}},{% endfor %}/badge;quote/HTML?AppID=vpPzT1b0oGUaGi7_AxID9gRdNAo_AA0-&sig=cz59BlEOYKnCI76TDO_qqV_V7Fg-&t=1436472604923"
                                     style="height:calc(170px + 30px * {{ stockLen }});">
                                 <a href="http://finance.yahoo.com">Yahoo! Finance</a>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from blog.models import Post
 from blog.models import Tag
-from blog.models import About
+from blog.models import Page
 from blog.models import Stock
 
 class PostAdmin(admin.ModelAdmin):
@@ -32,7 +32,16 @@ class TagAdmin(admin.ModelAdmin):
 class StockAdmin(admin.ModelAdmin):
     save_on_top = True
     
-class AboutAdmin(admin.ModelAdmin):
+class PageAdmin(admin.ModelAdmin):
+    #fields display on change list
+    list_display = ['title','order']
+    #fields to filter the change list with
+    list_filter = ['published']
+    #fields to search in change list
+    search_fields = ['title','content']
+    #prepopulate the slug from the title
+    prepopulated_fields = {"slug":("title",)}
+    #enable the save buttons on top of change form
     save_on_top = True
 
 admin.site.register(Post,PostAdmin)
@@ -41,4 +50,4 @@ admin.site.register(Tag,TagAdmin)
 
 admin.site.register(Stock,StockAdmin)
 
-admin.site.register(About,AboutAdmin)
+admin.site.register(Page,PageAdmin)

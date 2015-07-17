@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Post
 from blog.models import Tag
 from blog.models import Stock
-from blog.models import About
+from blog.models import Page
 from blog.utils import *
 
 def index(request):
@@ -18,7 +18,7 @@ def index(request):
         post_list = Post.objects.filter(postQuery,published=True).distinct()
     else:
         post_list = Post.objects.filter(published=True)
-    paginator = Paginator(post_list,4) # Show 4 posts per page
+    paginator = Paginator(post_list,3) # Show 3 posts per page
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -36,15 +36,10 @@ def index(request):
     for post in posts:
             post.stocks = Stock.objects.filter(post__slug=post.slug)
             stockLen += len(post.stocks)
+    #find all published pages
+    pages = Page.objects.filter(published=True)
     #now return the rendered template
-    return render(request,'blog/index.html',{'posts':posts,'tags':tags,'half_tags':half_tags,'tagParam':tagParam,'queryParam':queryParam,'stockLen':stockLen})
-
-def about(request):
-    about = About.objects.all()[:1].get()
-    #Tags
-    tags = Tag.objects.all()
-    half_tags = math.ceil(len(tags)/2.0)
-    return render(request,'blog/about.html',{'about':about,'tags':tags,'half_tags':half_tags})
+    return render(request,'blog/index.html',{'posts':posts,'tags':tags,'half_tags':half_tags,'tagParam':tagParam,'queryParam':queryParam,'stockLen':stockLen,'pages':pages})
 
 def post(request,slug):
     #get the Post object
@@ -55,5 +50,16 @@ def post(request,slug):
     #Stocks
     post.stocks = Stock.objects.filter(post__slug=post.slug)
     stockLen = len(post.stocks)
+    #find all published pages
+    pages = Page.objects.filter(published=True)
     #now return the rendered template
-    return render(request,'blog/post.html',{'post':post,'tags':tags,'half_tags':half_tags,'stockLen':stockLen})
+    return render(request,'blog/post.html',{'post':post,'tags':tags,'half_tags':half_tags,'stockLen':stockLen,'pages':pages})
+
+def page(request,slug):
+    page = get_object_or_404(Page,slug=slug)
+    #find all published pages
+    pages = Page.objects.filter(published=True)
+    #Tags
+    tags = Tag.objects.all()
+    half_tags = math.ceil(len(tags)/2.0)
+    return render(request,'blog/page.html',{'page':page,'pages':pages,'tags':tags,'half_tags':half_tags,'pages':pages})
